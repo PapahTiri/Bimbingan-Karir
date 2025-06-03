@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Dokter\ObatController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dokter\ObatController;
+use App\Http\Controllers\Dokter\JadwalPeriksaController;
 
 Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->group(function () {
     Route::get('/dashboard', function () {
@@ -16,4 +17,10 @@ Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->group(function () 
         Route::patch('/{id}', [ObatController::class, 'update'])->name('dokter.obat.update');
         Route::delete('/{id}', [ObatController::class, 'destroy'])->name('dokter.obat.destroy');
     });
+
+    Route::resource('jadwalPeriksa', JadwalPeriksaController::class)
+        ->names('dokter.jadwalPeriksa');
+
+    Route::patch('jadwalPeriksa/{id}/toggle-status', [JadwalPeriksaController::class, 'toggleStatus'])
+    ->name('dokter.jadwalPeriksa.toggle-status');
 });

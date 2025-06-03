@@ -20,9 +20,12 @@
                     @if (Auth::user()->role == 'dokter')
                             <x-nav-link :href="route('dokter.dashboard')" :active="request()->routeIs('dokter.dashboard')">
                             {{ __('Dashboard') }}
-                                </x-nav-link>
+                            </x-nav-link>
                             <x-nav-link :href="route('dokter.obat.index')" :active="request()->routeIs('dokter.obat.index')">
                             {{ __('Obat') }}
+                            </x-nav-link>
+                             <x-nav-link :href="route('dokter.jadwalPeriksa.index')" :active="request()->routeIs('dokter.jadwalPeriksa.index')">
+                            {{ __('Jadwal Periksa') }}
                             </x-nav-link>
                     @elseif(Auth::user()->role == 'pasien')
                             <x-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')">
