@@ -16,7 +16,7 @@ Aplikasi manajemen poliklinik berbasis Laravel 12 dan laravel breeze.
 
 1. **Clone repository**
    ```sh
-   git clone https://github.com/PapahTiri/poliklinik.git
+   git clone https://github.com/PapahTiri/Bimbingan-Karir.git
    cd poliklinik
    ```
 
