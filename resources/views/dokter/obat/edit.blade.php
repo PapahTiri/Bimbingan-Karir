@@ -20,7 +20,7 @@
                             </p>
                         </header>
 
-                        <form class="mt-6 space-y-4" action="{{ route('dokter.obat.update', $obat->id) }}" method="POST">
+                        <form class="mt-6 space-y-4" action="{{ route('dokter.obat.update', $obats->id) }}" method="POST">
                             @csrf
                             @method('PATCH')
 
@@ -31,7 +31,7 @@
                                     type="text"
                                     id="editNamaObatInput"
                                     name="nama_obat"
-                                    value="{{ old('nama_obat', $obat->nama_obat) }}"
+                                    value="{{ old('nama_obat', $obats->nama_obat) }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     required
                                 >
@@ -47,7 +47,7 @@
                                     type="text"
                                     id="editKemasanInput"
                                     name="kemasan"
-                                    value="{{ old('kemasan', $obat->kemasan) }}"
+                                    value="{{ old('kemasan', $obats->kemasan) }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     required
                                 >
@@ -63,7 +63,7 @@
                                     type="number"
                                     id="editHargaInput"
                                     name="harga"
-                                    value="{{ old('harga', $obat->harga) }}"
+                                    value="{{ old('harga', $obats->harga) }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     required
                                 >
