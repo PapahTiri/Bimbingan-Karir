@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Jadwal Periksa') }}
+            {{ ('Jadwal Periksa') }}
         </h2>
     </x-slot>
 
@@ -11,7 +11,7 @@
                 <section>
                     <header class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-gray-900">
-                            {{ __('Daftar Jadwal Periksa') }}
+                            {{ ('Daftar Jadwal Periksa') }}
                         </h2>
                         <a href="{{ route('dokter.jadwalPeriksa.create') }}"
                            class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
