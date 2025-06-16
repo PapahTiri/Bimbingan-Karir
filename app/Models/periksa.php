@@ -31,4 +31,8 @@ class periksa extends Model
     {
         return $this->hasMany(detail_periksa::class, 'id_periksa');
     }
+    public function obat():BelongsTo
+    {
+        return $this->belongsTo(obat::class, detail_periksa::class, 'id_obat');
+    }
 }

@@ -23,7 +23,7 @@ class janji_periksa extends Model
         return $this->belongsTo(User::class, 'id_pasien');
     }
 
-    public function jadwalPeriksas():BelongsTo
+    public function jadwalPeriksa():BelongsTo
     {
         return $this->belongsTo(jadwal_periksa::class, 'id_jadwal_periksa');
     }

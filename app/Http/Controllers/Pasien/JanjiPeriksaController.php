@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Pasien;
 
 use App\Models\User;
+use App\Models\periksa;
 use Illuminate\Http\Request;
 use App\Models\janji_periksa;
 use App\Http\Controllers\Controller;
+use App\Models\jadwal_periksa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -32,29 +34,26 @@ class JanjiPeriksaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'id_jadwal_periksa' => 'required|exists:jadwal_periksas,id',
+        $request->validate([
+            'id_dokter' => 'required|exists:users,id',
             'keluhan' => 'required',
         ]);
 
-        $jumlahJanji = janji_periksa::where('id_jadwal_periksa', $validatedData['id_jadwal_periksa'])->count();
+        $jadwalPeriksa = jadwal_periksa::where('id_dokter', $request->id_dokter)
+            ->where('status', true)
+            ->first();
+
+        $jumlahJanji = janji_periksa::where('id_jadwal_periksa', $jadwalPeriksa->id)->count();
         $noAntrian = $jumlahJanji + 1;
 
         janji_periksa::create([
             'id_pasien' => Auth::user()->id,
-            'id_jadwal_periksa' => $validatedData['id_jadwal_periksa'],
+            'id_jadwal_periksa' => $jadwalPeriksa->id,
             'keluhan' => $request->keluhan,
             'no_antrian' => $noAntrian,
         ]);
@@ -62,35 +61,4 @@ class JanjiPeriksaController extends Controller
         return Redirect::route('pasien.janjiPeriksa.index')->with('status', 'janji-periksa-created');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

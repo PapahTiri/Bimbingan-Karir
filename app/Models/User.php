@@ -26,7 +26,7 @@ class User extends Authenticatable
         'no_ktp',
         'no_hp',
         'no_rm',
-        'poli',
+        'id_poli',
     ];
 
     public function jadwalPeriksas()
@@ -37,6 +37,14 @@ class User extends Authenticatable
     public function janjiPeriksas()
     {
         return $this->hasMany(janji_periksa::class, 'id_pasien');
+    }
+    public function poli()
+    {
+        return $this->belongsTo(Poli::class, 'id_poli');
+    }
+    public function hasRole($role)
+    {
+        return $this->role === $role;
     }
 
     /**
