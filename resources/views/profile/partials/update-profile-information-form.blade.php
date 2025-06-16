@@ -5,7 +5,7 @@
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ ("Update your account's profile information and email address.") }}
         </p>
     </header>
 
@@ -18,9 +18,9 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="nama" :value="('Name')" />
+            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full" :value="old('nama', $user->nama)" required autofocus autocomplete="nama" />
+            <x-input-error class="mt-2" :messages="$errors->get('nama')" />
         </div>
 
         <div>
@@ -31,24 +31,45 @@
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
+                        {{ ('Your email address is unverified.') }}
 
                         <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
+                            {{ ('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
                         <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
+                            {{ ('A new verification link has been sent to your email address.') }}
                         </p>
                     @endif
                 </div>
             @endif
         </div>
 
+        @if (auth()->user()->hasRole('dokter'))
+            <div class="mt-4">
+                <label for="id_poli" class="block font-medium text-sm text-gray-700">Poli</label>
+                <select name="id_poli" id="id_poli" class="form-select mt-1 block w-full">
+                    <option value="">-- Pilih Poli --</option>
+                    @foreach ($poli as $p)
+                        <option value="{{ $p->id }}" {{ old('id_poli', $user->id_poli) == $p->id ? 'selected' : '' }}>
+                            {{ $p->nama_poli }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('id_poli')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mt-4 p-4 bg-gray-100 rounded">
+                <h3 class="text-sm font-semibold text-gray-800">Deskripsi Poli:</h3>
+                <p class="text-sm text-gray-700">{{ $user->poli->deskripsi }}</p>
+            </div>
+        @endif
+
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ ('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -57,7 +78,7 @@
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
                     class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
+                >{{ ('Saved.') }}</p>
             @endif
         </div>
     </form>
