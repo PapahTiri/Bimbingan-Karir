@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Pasien;
 
+use App\Models\Poli;
 use App\Models\User;
 use App\Models\periksa;
 use Illuminate\Http\Request;
 use App\Models\janji_periksa;
-use App\Http\Controllers\Controller;
 use App\Models\jadwal_periksa;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -18,18 +19,22 @@ class JanjiPeriksaController extends Controller
      */
     public function index()
     {
-        $no_rm = Auth::user()->no_rm;
-        $dokters = User::with([
-            'jadwalPeriksas' => function ($query) {
-                $query->where('status', true);
-            },
+          $polis = Poli::all();
+            $no_rm = Auth::user()->no_rm;
+
+            $dokters = User::with([
+                'poli',
+                'jadwalPeriksas' => function ($query) {
+                    $query->where('status', true);
+                },
         ])
             ->where('role', 'dokter')
             ->get();
 
-        return view('pasien.janjiPeriksa.index')->with([
-            'no_rm' => $no_rm,
-            'dokters' => $dokters,
+            return view('pasien.janjiPeriksa.index')->with([
+                'polis' => $polis,
+                'no_rm' => $no_rm,
+                'dokters' => $dokters,
         ]);
     }
 
@@ -60,5 +65,16 @@ class JanjiPeriksaController extends Controller
 
         return Redirect::route('pasien.janjiPeriksa.index')->with('status', 'janji-periksa-created');
     }
+
+    // public function create()
+    // {
+    //     $polis = Poli::all();
+
+    //     $dokters = User::with(['poli', 'jadwalPeriksas'])
+    //         ->where('role', 'dokter')
+    //         ->get();
+
+    //     return view('pasien.janjiPeriksa.index', compact('polis', 'dokters'));
+    // }
 
 }
